@@ -1,0 +1,40 @@
+{
+    "1" : {
+
+        "IGP" : "RI¨P",
+
+        "relationships" : {
+            "2" : "client"
+        },
+
+        "ip_range" : "valeur jsp",
+
+        "loopback_range" : "valeur jsp",
+
+        "routers" : {
+            "R1" : {
+                "i_interfaces" : ["GigabitEthernet1/0","FastEthernet1/0"],
+                "e_interfaces" : {"GigabitEthernet2/0" : "address IP"}
+            }
+        }
+    },
+    "2" : {
+
+        "IGP" : "OSPF",
+
+        "relationships" : {
+            "1" : "provider"
+        },
+
+        "ip_range" : "valeur jsp",
+
+        "loopback_range" : "valeur jsp",
+
+        "routers" : {
+            "R1" : {
+                "i_interfaces" : ["GigabitEthernet1/0","FastEthernet1/0"],
+                "e_interfaces" : {"GigabitEthernet2/0" : "address IP"}
+            }
+        }
+    }
+}
