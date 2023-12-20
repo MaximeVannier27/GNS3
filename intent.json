@@ -1,7 +1,7 @@
 {
     "1" : {
 
-        "IGP" : "RI¨P",
+        "IGP" : "RIP",
 
         "relationships" : {
             "2" : "client"
@@ -13,11 +13,22 @@
 
         "routers" : {
             "R1" : {
-                "i_interfaces" : ["GigabitEthernet1/0","FastEthernet1/0"],
-                "e_interfaces" : {"GigabitEthernet2/0" : "address IP"}
+                "i_interfaces" : {"GigabitEthernet1/0" : "R2", "GigabitEthernet2/0" : "R5"},
+                "e_interfaces" : {}
+            },
+
+            "R2" : {
+                "i_interfaces" : {"GigabitEthernet1/0" : "R1"},
+                "e_interfaces" : {"GigabitEthernet2/0" : ["R3","2001:192:168:3::2"]}
+            },
+
+            "R5" : {
+                "i_interfaces" : {"GigabitEthernet2/0" : "R1"},
+                "e_interfaces" : {}
             }
         }
     },
+
     "2" : {
 
         "IGP" : "OSPF",
@@ -31,10 +42,21 @@
         "loopback_range" : "valeur jsp",
 
         "routers" : {
-            "R1" : {
-                "i_interfaces" : ["GigabitEthernet1/0","FastEthernet1/0"],
-                "e_interfaces" : {"GigabitEthernet2/0" : "address IP"}
+            "R3" : {
+                "i_interfaces" : {"GigabitEthernet1/0" : "R4"},
+                "e_interfaces" : {"GigabitEthernet2/0" : ["R2","2001:192:168:3::3"]}
+            },
+
+            "R4" : {
+                "i_interfaces" : {"GigabitEthernet1/0" : "R3", "GigabitEthernet2/0" : "R5"},
+                "e_interfaces" : {}
+            },
+
+            "R6" : {
+                "i_interfaces" : {"GigabitEthernet2/0" : "R4"},
+                "e_interfaces" : {}
             }
         }
     }
 }
+
