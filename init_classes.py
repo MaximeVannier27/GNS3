@@ -1,10 +1,13 @@
 import json
-def init_class(json_file):
-    from classes import Router, AS
-    with open("intent.json",'r',encoding='utf-8') as fichier:
+from classes import Router, AS
+
+def init_as(intent):
+
+    # ouverture de l'intent file
+    with open(intent,'r',encoding='utf-8') as fichier:
         dico_as = json.load(fichier)
 
-    liste_as = []
+    liste_as = [] # liste qui va être retournée contenant les AS
 
     #création des variables de types AS et de type 
     for (as_n,value) in dico_as.items():
@@ -22,10 +25,6 @@ def init_class(json_file):
             globals()[Ri].numero = router_n
             print(globals()[Ri])
             (globals()[num_as].routers).append(globals()[Ri])
-        
+        print(globals()[num_as])
 
     return liste_as
-
-
-
-
