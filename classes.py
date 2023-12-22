@@ -17,11 +17,12 @@ class Router:
         """
         self.AS_n = router_AS       #AS auquel appartient le router
         self.loopback = None        #adresse de loopback du router
-        self.ID = None              #ID BGP du router, on utilise le même pour OSPF si besoin
+        self.numero = None          # numero du routeur
         self.interfaces = {}        #dico adresse : interface
         self.voisins_AS = []        #liste des voisins au sein du même AS
         self.voisins_ext = {}       #dico voisin dans un AS différent : numéro d'AS
         self.border = False         #permet de savoir si le router est en bordure de l'AS ou non
+        self.configList = []        #liste de strings correspondant aux lignes du fichier config du routeur
 
     def __str__(self):
         """
