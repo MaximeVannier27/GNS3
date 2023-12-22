@@ -8,7 +8,7 @@ class AS:
         self.loopback = None    #range ip loopback
 
     def __str__(self):
-        return "AS : {self.numero}\nIGP : {self.igp}\nRouters : {self.routers}\nAS relationships : {self.rel}\nIP RANGE: {self.ip}\nLoopback IP range: {self.loopback}"
+        return f"AS : {self.num}\nIGP : {self.igp}\nRouters : {self.routers}\nAS relationships : {self.rel}\nIP RANGE: {self.ip}\nLoopback IP range: {self.loopback}"
 
 class Router: 
     def __init__(self,router_AS):
@@ -28,5 +28,5 @@ class Router:
         renvoie une liste des attributs de 
         utilisée pour le print 
         """
-        return "ID : {self.ID}\nAS: {self.AS}\ninterfaces : {self.interfaces}\nloopback : {self.loopback}\nvoisins du même AS : {self.voisins_AS}\nvoisins d'un autre AS : {self.voisins_ext}"	
+        return f"ID : {self.ID}\nAS: {self.AS_n}\ninterfaces : {self.interfaces}\nloopback : {self.loopback}\nvoisins du même AS : {self.voisins_AS}\nvoisins d'un autre AS : {self.voisins_ext}"	
     
