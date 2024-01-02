@@ -9,7 +9,7 @@ def initConfigList(routerName):
 
 
 def creationConfigFinal(routerName,configList):
-    with open(f".configs/i{routerName.numero}_startup-config.cfg","w") as fichier:
+    with open(f"./resultats_configs/i{routerName.numero}_startup-config.cfg","w") as fichier:
         fichier.writelines(configList)
 
 """
@@ -27,23 +27,41 @@ def initInterface(routeurName,interface):
         lignes_interface.append(" negotiation auto")
     lignes_interface.append(" ipv6 address",routeurName.interfaces[interface][0]) #routeurName.interfaces[interface][0] --> @ ip de l'interface précisée dans la classe du routeur concerné
     lignes_interface.append(" ipv6 enable")
-
-    return lignes_interface
-    
-"""
-Fonction pour écrire dans la liste config de l'interface les/la ligne(s) liés au protocole (elle écrit sur la liste/pas de return)
-J'ai testé et c'est pas comme en C, la liste est bien modifiée
-"""
-def protInterface(routeurName,interface,lignes_interface):
     if routeurName.AS_n.igp == "rip" and routeurName.interface[interface][2]==routeurName.AS_n.num:  #test si protocole rip ET interface interne à l'AS (le test est un peu étrange je suis d'accord mais je voulais utiliser les classes et pas le json -->c'est plus clair dans le json vu qu'sépare interface interne et externe)
         lignes_interface.append(" ipv6 rip prot_RIP enable")
     elif routeurName.AS_n.igp == "ospf":
         lignes_interface.append(" ipv6 ospf 1 area 0")
 
+    return lignes_interface
+    
 
-        #on peut essayer de créer directement des bouts de listes avec les réglages des protocoles
-        #qu'on ajoutera après à tout (autant utiliser les tests qui sont fait ici)
-        #sûrement problématique pour BGP car pas lié à une interface (appeler une autre fonction ?)
+def initBGP(routeurName):
+
+    lignes_bgp = []
+    lignes_bgp.append("router bgp",routeurName.AS_n.num)
+    lignes_bgp.append(f" bgp router-id {'.'.join(4*str(routeurName.numero))}")
+    lignes_bgp.append(" bgp log-neighbor-changes")
+    lignes_bgp.append(" no bgp default ipv4-unicast")
+    for interface in routeurName.interfaces:
+        routeur_voisin = interface[1]
+        if routeur_voisin.AS_n.num == routeurName.AS_n.num:
+            lignes_bgp.append(f" neighbor {routeur_voisin.loopback} remote-as {routeur_voisin.AS_n.num}")     #rajouter l'interface loopback au fichier d'intention
+            lignes_bgp.append(f" neighbor {routeur_voisin.loopback} update-source Loopback0")
+        else:
+            for i,c in routeur_voisin.interfaces:
+                if c[1] == routeurName:
+                    tmp = i
+                    break
+            lignes_bgp.append(f" neighbor {tmp} remote-as {routeur_voisin.AS_n.num}")
+
+    return lignes_bgp
+ 
+
+
+
+
+
+
         #PAS OUBLIER LES PASSIVES INTERFACES (GE2/0 sur R3 car ospf)
 
 

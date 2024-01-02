@@ -18,7 +18,7 @@ class Router:
         self.AS_n = router_AS       #AS auquel appartient le router
         self.loopback = None        #adresse de loopback du router
         self.numero = None          # numero du routeur
-        self.interfaces = {}        #dico interface : [adresse ip, voisin, AS du voisin]
+        self.interfaces = {}        #dico interface : [adresse ip, voisin (routeurs ?), AS du voisin]
         self.border = False         #permet de savoir si le router est en bordure de l'AS ou non
         self.configList = []        #liste de strings correspondant aux lignes du fichier config du routeur
 
