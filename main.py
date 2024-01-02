@@ -14,10 +14,8 @@ def creationConfigFinal(routerName,configList):
 
 """
 Fonction pour initialiser les premières lignes du fichier config pour
-chaque interface, avec la fonction de l'adressage IP qui, je suppose
-modifie directement la classe routeurs à l'initialisation (self.interfaces)
-On va traiter une liste par interface comme ça on rajoute directement les différentes
-lignes (en fonction du protocole) et on concatène à la fin
+chaque interface, avec la fonction de l'adressage IP
+On retourne la liste de toutes les interfaces rédigées
 """
 def initInterface(routeurName,interface):
     lignes_interface = []
@@ -55,7 +53,18 @@ def initBGP(routeurName):
             lignes_bgp.append(f" neighbor {tmp} remote-as {routeur_voisin.AS_n.num}")
 
     return lignes_bgp
- 
+
+
+def initAddressFamily(routerName):
+    lignes_addressfamily = []
+    lignes_addressfamily.append("address-family ipv4")
+    lignes_addressfamily.append("exit-address-family")
+    lignes_addressfamily.append("!")
+    
+    lignes_addressfamily.append("address-family ipv6")
+
+    
+
 
 
 
