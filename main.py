@@ -51,27 +51,34 @@ def initBGP(routeurName):
                     tmp = i
                     break
             lignes_bgp.append(f" neighbor {tmp} remote-as {routeur_voisin.AS_n.num}")
-
+    lignes_bgp.append(" !")
     return lignes_bgp
 
 
 def initAddressFamily(routerName):
     lignes_addressfamily = []
-    lignes_addressfamily.append("address-family ipv4")
-    lignes_addressfamily.append("exit-address-family")
+    lignes_addressfamily.append(" address-family ipv4")
+    lignes_addressfamily.append(" exit-address-family")
+    lignes_addressfamily.append(" !")
+    
+    lignes_addressfamily.append(" address-family ipv6")
+
+    if routerName.border:
+        for i : #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
+            lignes_addressfamily.append("  network .........")
+        lignes_addressfamily.append("  neighbor  ........... activate") #@ip de l'interface du routeur de l'AS voisine
+
+    for r in routerName.AS_n.routers:
+        if r != routerName:
+            lignes_addressfamily.append("  neighbor ............. activate")
+
+    lignes_addressfamily.append(" exit-address-family")
     lignes_addressfamily.append("!")
     
-    lignes_addressfamily.append("address-family ipv6")
-
-    
+    return lignes_addressfamily
 
 
-
-
-
-
-
-        #PAS OUBLIER LES PASSIVES INTERFACES (GE2/0 sur R3 car ospf)
+#PAS OUBLIER LES PASSIVES INTERFACES (GE2/0 sur R3 car ospf)
 
 
 
