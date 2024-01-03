@@ -17,18 +17,20 @@ Fonction pour initialiser les premières lignes du fichier config pour
 chaque interface, avec la fonction de l'adressage IP
 On retourne la liste de toutes les interfaces rédigées
 """
-def initInterface(routeurName,interface):
-    lignes_interface = []
-    lignes_interface.append("interface",interface)
-    lignes_interface.append(" no ip address")
-    if "Loopback" not in interface:
-        lignes_interface.append(" negotiation auto")
-    lignes_interface.append(" ipv6 address",routeurName.interfaces[interface][0]) #routeurName.interfaces[interface][0] --> @ ip de l'interface précisée dans la classe du routeur concerné
-    lignes_interface.append(" ipv6 enable")
-    if routeurName.AS_n.igp == "rip" and routeurName.interface[interface][2]==routeurName.AS_n.num:  #test si protocole rip ET interface interne à l'AS (le test est un peu étrange je suis d'accord mais je voulais utiliser les classes et pas le json -->c'est plus clair dans le json vu qu'sépare interface interne et externe)
-        lignes_interface.append(" ipv6 rip prot_RIP enable")
-    elif routeurName.AS_n.igp == "ospf":
-        lignes_interface.append(" ipv6 ospf 1 area 0")
+def initInterface(routeurName):
+    for interface in routeurName.interfaces.keys():
+        lignes_interface = []
+        lignes_interface.append("interface",interface)
+        lignes_interface.append(" no ip address")
+        if "Loopback" not in interface:
+            lignes_interface.append(" negotiation auto")
+        lignes_interface.append(" ipv6 address",routeurName.interfaces[interface][0]) #routeurName.interfaces[interface][0] --> @ ip de l'interface précisée dans la classe du routeur concerné
+        lignes_interface.append(" ipv6 enable")
+        if routeurName.AS_n.igp == "rip" and routeurName.interface[interface][2]==routeurName.AS_n.num:  #test si protocole rip ET interface interne à l'AS (le test est un peu étrange je suis d'accord mais je voulais utiliser les classes et pas le json -->c'est plus clair dans le json vu qu'sépare interface interne et externe)
+            lignes_interface.append(" ipv6 rip prot_RIP enable")
+        elif routeurName.AS_n.igp == "ospf":
+            lignes_interface.append(" ipv6 ospf 1 area 0")
+        lignes_interface.append("!")
 
     return lignes_interface
     
@@ -77,6 +79,30 @@ def initAddressFamily(routerName):
     
     return lignes_addressfamily
 
+
+
+def initProtocole(routeurName):
+    lignes_protocole = []
+    lignes_protocole.append("ip forward-protocol nd")
+    lignes_protocole.append("!")
+    lignes_protocole.append("!")
+    lignes_protocole.append("no ip http server")
+    lignes_protocole.append("no ip http secure-server")
+    lignes_protocole.append("!")
+
+    if routeurName.AS_n.igp == "rip":
+        lignes_protocole.append("ipv6 router rip prot_RIP")
+        lignes_protocole.append(" redistribute connected")
+    elif routeurName.AS_n.igp == "ospf":
+        lignes_protocole.append("ipv6 router ospf 1")
+        lignes_protocole.append(f" router-id {'.'.join(4*str(routeurName.numero))}")
+        if routeurName.border:
+            for i,c in routeurName.interfaces:
+                if c[2] != routeurName.AS_n.numero:
+                    lignes_protocole.append(" passive-interface {i}")
+    
+    return lignes_protocole
+            
 
 #PAS OUBLIER LES PASSIVES INTERFACES (GE2/0 sur R3 car ospf)
 
