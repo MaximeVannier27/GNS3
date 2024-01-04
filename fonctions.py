@@ -1,16 +1,14 @@
 from datetime import datetime
 from init_classes import init_as
 
-config_defaut = ["!", f"! Last configuration change at {datetime.now()}", "!", "version 15.2", "service timestamps debug datetime msec", "service timestamps log datetime msec", "!", "hostname ", "!", "boot-start-marker", "boot-end-marker", "!", "!", "!", "no aaa new-model", "no ip icmp rate-limit unreachable", "ip cef", "!", "!", "!", "!", "!", "!", "no ip domain lookup", "ipv6 unicast-routing", "ipv6 cef", "!", "!", "multilink bundle-name authenticated", "!", "!", "!", "!", "!", "!", "!", "!", "!", "ip tcp synwait-time 5", "!", "!", "!", "!", "!", "!", "!", "!", "!"]
-
 
 def initConfigList(routerName):
-    routerName.configList = config_defaut
+    routerName.configList = ["!", f"! Last configuration change at {datetime.now()}", "!", "version 15.2", "service timestamps debug datetime msec", "service timestamps log datetime msec", "!", "hostname ", "!", "boot-start-marker", "boot-end-marker", "!", "!", "!", "no aaa new-model", "no ip icmp rate-limit unreachable", "ip cef", "!", "!", "!", "!", "!", "!", "no ip domain lookup", "ipv6 unicast-routing", "ipv6 cef", "!", "!", "multilink bundle-name authenticated", "!", "!", "!", "!", "!", "!", "!", "!", "!", "ip tcp synwait-time 5", "!", "!", "!", "!", "!", "!", "!", "!", "!"]
 
 
-def creationConfigFinal(routerName,configList):
+def creationConfigFinal(routerName):
     with open(f"./resultats_configs/i{routerName.numero}_startup-config.cfg","w") as fichier:
-        fichier.writelines(configList)
+        fichier.writelines(routerName.configList)
 
 """
 Fonction pour initialiser les premières lignes du fichier config pour
@@ -113,6 +111,3 @@ def initProtocole(routeurName,asName):
     
     return lignes_protocole
     
-
-#autres fonctions pour écrire les lignes après la déclaration des interfaces
-    # concaténer les listes interface dans la config_list du routeur
