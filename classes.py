@@ -8,6 +8,7 @@ class AS:
         self.loopback = None    #range ip loopback
         #!!!!! j'ai appelé AS.lienslocaux dans les fonctions, tu peux mettre autre chose mais faudra pas oublier de le changer alors !!!!!!
 
+
     def __str__(self):
         return f"AS : {self.num}\nIGP : {self.igp}\nRouters : {self.routers}\nAS relationships : {self.rel}\nIP RANGE: {self.ip}\nLoopback IP range: {self.loopback}\n"
 
@@ -19,7 +20,7 @@ class Router:
         self.AS_n = router_AS       #AS auquel appartient le router
         self.loopback = None        #adresse de loopback du router
         self.numero = None          # numero du routeur
-        self.interfaces = {}        #dico interface : [adresse ip, voisin (routeurs ?), AS du voisin]
+        self.interfaces = {}        #dico interface : [adresse ip, voisin (objet routeurs ?), AS du voisin]
         self.border = False         #permet de savoir si le router est en bordure de l'AS ou non
         self.configList = []        #liste de strings correspondant aux lignes du fichier config du routeur
 
