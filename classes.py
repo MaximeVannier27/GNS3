@@ -6,6 +6,7 @@ class AS:
         self.rel = {}           #dico AS : relations à cet AS
         self.ip  = None         #range ip
         self.loopback = None    #range ip loopback
+        #!!!!! j'ai appelé AS.lienslocaux dans les fonctions, tu peux mettre autre chose mais faudra pas oublier de le changer alors !!!!!!
 
     def __str__(self):
         return f"AS : {self.num}\nIGP : {self.igp}\nRouters : {self.routers}\nAS relationships : {self.rel}\nIP RANGE: {self.ip}\nLoopback IP range: {self.loopback}\n"

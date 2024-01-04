@@ -17,7 +17,7 @@ Fonction pour initialiser les premières lignes du fichier config pour
 chaque interface, avec la fonction de l'adressage IP
 On retourne la liste de toutes les interfaces rédigées
 """
-def initInterface(routeurName):
+def initInterface(routeurName,asName):
     for interface in routeurName.interfaces.keys():
         lignes_interface = []
         lignes_interface.append("interface",interface)
@@ -26,16 +26,16 @@ def initInterface(routeurName):
             lignes_interface.append(" negotiation auto")
         lignes_interface.append(" ipv6 address",routeurName.interfaces[interface][0]) #routeurName.interfaces[interface][0] --> @ ip de l'interface précisée dans la classe du routeur concerné
         lignes_interface.append(" ipv6 enable")
-        if routeurName.AS_n.igp == "rip" and routeurName.interface[interface][2]==routeurName.AS_n.num:  #test si protocole rip ET interface interne à l'AS (le test est un peu étrange je suis d'accord mais je voulais utiliser les classes et pas le json -->c'est plus clair dans le json vu qu'sépare interface interne et externe)
+        if asName.igp == "rip" and routeurName.interface[interface][2]==asName.num:  #test si protocole rip ET interface interne à l'AS (le test est un peu étrange je suis d'accord mais je voulais utiliser les classes et pas le json -->c'est plus clair dans le json vu qu'sépare interface interne et externe)
             lignes_interface.append(" ipv6 rip prot_RIP enable")
-        elif routeurName.AS_n.igp == "ospf":
+        elif asName.igp == "ospf":
             lignes_interface.append(" ipv6 ospf 1 area 0")
         lignes_interface.append("!")
 
     return lignes_interface
     
 
-def initBGP(routeurName):
+def initBGP(routeurName,asName):
 
     lignes_bgp = []
     lignes_bgp.append("router bgp",routeurName.AS_n.num)
@@ -44,20 +44,20 @@ def initBGP(routeurName):
     lignes_bgp.append(" no bgp default ipv4-unicast")
     for interface in routeurName.interfaces:
         routeur_voisin = interface[1]
-        if routeur_voisin.AS_n.num == routeurName.AS_n.num:
-            lignes_bgp.append(f" neighbor {routeur_voisin.loopback} remote-as {routeur_voisin.AS_n.num}")     #rajouter l'interface loopback au fichier d'intention
+        if routeur_voisin.AS_n == routeurName.AS_n:
+            lignes_bgp.append(f" neighbor {routeur_voisin.loopback} remote-as {routeur_voisin.AS_n}")     #rajouter l'interface loopback au fichier d'intention
             lignes_bgp.append(f" neighbor {routeur_voisin.loopback} update-source Loopback0")
         else:
             for i,c in routeur_voisin.interfaces:
                 if c[1] == routeurName:
                     tmp = i
                     break
-            lignes_bgp.append(f" neighbor {tmp} remote-as {routeur_voisin.AS_n.num}")
+            lignes_bgp.append(f" neighbor {tmp} remote-as {routeur_voisin.AS_n}")
     lignes_bgp.append(" !")
     return lignes_bgp
 
 
-def initAddressFamily(routerName):
+def initAddressFamily(routerName,asName):
     lignes_addressfamily = []
     lignes_addressfamily.append(" address-family ipv4")
     lignes_addressfamily.append(" exit-address-family")
@@ -66,13 +66,14 @@ def initAddressFamily(routerName):
     lignes_addressfamily.append(" address-family ipv6")
 
     if routerName.border:
-        for i : #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
+        for i in asName.lienslocaux: #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
             lignes_addressfamily.append("  network .........")
+        for #récupérer toutes les interfaces des routeurs d'AS voisines, connectées a routeurName 
         lignes_addressfamily.append("  neighbor  ........... activate") #@ip de l'interface du routeur de l'AS voisine
 
     for r in routerName.AS_n.routers:
         if r != routerName:
-            lignes_addressfamily.append("  neighbor ............. activate")
+            lignes_addressfamily.append(f"  neighbor {r.loopback} activate") #@ loopback des routeurs de l'AS
 
     lignes_addressfamily.append(" exit-address-family")
     lignes_addressfamily.append("!")
@@ -81,7 +82,7 @@ def initAddressFamily(routerName):
 
 
 
-def initProtocole(routeurName):
+def initProtocole(routeurName,asName):
     lignes_protocole = []
     lignes_protocole.append("ip forward-protocol nd")
     lignes_protocole.append("!")
@@ -90,15 +91,15 @@ def initProtocole(routeurName):
     lignes_protocole.append("no ip http secure-server")
     lignes_protocole.append("!")
 
-    if routeurName.AS_n.igp == "rip":
+    if asName.igp == "rip":
         lignes_protocole.append("ipv6 router rip prot_RIP")
         lignes_protocole.append(" redistribute connected")
-    elif routeurName.AS_n.igp == "ospf":
+    elif asName.igp == "ospf":
         lignes_protocole.append("ipv6 router ospf 1")
         lignes_protocole.append(f" router-id {'.'.join(4*str(routeurName.numero))}")
         if routeurName.border:
             for i,c in routeurName.interfaces:
-                if c[2] != routeurName.AS_n.numero:
+                if c[2] != routeurName.AS_n:
                     lignes_protocole.append(" passive-interface {i}")
     
     return lignes_protocole
