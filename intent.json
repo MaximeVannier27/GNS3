@@ -4,22 +4,22 @@
         "relationships": {
             "2": "client"
         },
-        "ip_range": "valeur jsp",
-        "loopback_range": "valeur jsp",
+        "ip_range": "plage ip",
+        "loopback_range": "plage loopback",
         "routers": {
             "1": {
                 "i_interfaces": {
-                    "GE1/0": "R2",
-                    "GE2/0": "R5"
+                    "GigabitEthernet1/0": "R2",
+                    "GigabitEthernet2/0": "R5"
                 },
                 "e_interfaces": {}
             },
             "2": {
                 "i_interfaces": {
-                    "GE1/0": "R1"
+                    "GigabitEthernet1/0": "R1"
                 },
                 "e_interfaces": {
-                    "GE2/0": [
+                    "GigabitEthernet2/0": [
                         "R3",
                         "2001:192:168:3::2"
                     ]
@@ -27,7 +27,7 @@
             },
             "5": {
                 "i_interfaces": {
-                    "GE2/0": "R1"
+                    "GigabitEthernet2/0": "R1"
                 },
                 "e_interfaces": {}
             }
@@ -38,15 +38,15 @@
         "relationships": {
             "1": "provider"
         },
-        "ip_range": "valeur jsp",
-        "loopback_range": "valeur jsp",
+        "ip_range": "plage ip",
+        "loopback_range": "plage loopback",
         "routers": {
             "3": {
                 "i_interfaces": {
-                    "GE1/0": "R4"
+                    "GigabitEthernet1/0": "R4"
                 },
                 "e_interfaces": {
-                    "GE2/0": [
+                    "GigabitEthernet2/0": [
                         "R2",
                         "2001:192:168:3::3"
                     ]
@@ -54,14 +54,14 @@
             },
             "4": {
                 "i_interfaces": {
-                    "GE1/0": "R3",
-                    "GE2/0": "R5"
+                    "GigabitEthernet1/0": "R3",
+                    "GigabitEthernet2/0": "R5"
                 },
                 "e_interfaces": {}
             },
             "6": {
                 "i_interfaces": {
-                    "GE2/0": "R4"
+                    "GigabitEthernet2/0": "R4"
                 },
                 "e_interfaces": {}
             }
