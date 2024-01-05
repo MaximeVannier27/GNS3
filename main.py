@@ -3,8 +3,9 @@ from init_classes import *
 
 fin_config = ["!", "!", "!", "control-plane", "!", "!", "line con 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line aux 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line vty 0 4", " login", "!", "!", "end"]
 
-
-liste_AS = init_as("intent.json")
+dico_json = load_intent("intent.json")
+liste_AS = init_as(dico_json)
+init_routeur_adresses(dico_json)
 
 for AS_courant in liste_AS:
     for routeur_courant in AS_courant.routers:

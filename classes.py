@@ -6,7 +6,7 @@ class AS:
         self.rel = {}           #dico AS : relations à cet AS
         self.ip  = None         #range ip
         self.loopback = None    #range ip loopback
-        self.lienslocaux = []   #!!!!! j'ai appelé AS.lienslocaux dans les fonctions, tu peux mettre autre chose mais faudra pas oublier de le changer alors !!!!!!
+        self.lienslocaux = {}   # dico (r1,r2) : "subnet ip"
 
 
     def __str__(self):

@@ -25,7 +25,7 @@ def initInterface(routeurName,asName):
     
     lignes_total = []           #initialisation du texte à ajouter à la config
 
-    for interface,[ip,voisin] in routeurName.interfaces.items():
+    for interface,(ip,voisin) in routeurName.interfaces.items():
         lignes_interface = []
         lignes_interface.append("interface",interface)  
         lignes_interface.append(" no ip address")
@@ -60,7 +60,7 @@ def initBGP(routeurName,asName):
             lignes_bgp.append(f" neighbor {routeur_voisin.loopback} remote-as {routeur_voisin.AS_n}")     #rajouter l'interface loopback au fichier d'intention
             lignes_bgp.append(f" neighbor {routeur_voisin.loopback} update-source Loopback0")
         else:
-            for i,c in routeur_voisin.interfaces:
+            for i,c in routeur_voisin.interfaces.items():
                 if c[1] == routeurName:
                     tmp = i
                     break
@@ -80,7 +80,7 @@ def initAddressFamily(routerName,asName):
     lignes_addressfamily.append(" address-family ipv6")
 
     if routerName.border:
-        for i in asName.lienslocaux: #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
+        for i in asName.lienslocaux.values(): #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
             lignes_addressfamily.append(f"  network {i}")
 
         """ JE SUIS DESOLE J'AI PANIQUE C'EST SUREMENT INCOMPREHENSIBLE ET PAS OPTI MAIS J'AI PAS"""
@@ -122,7 +122,7 @@ def initProtocole(routeurName,asName):
         lignes_protocole.append(f" router-id {'.'.join(4*str(routeurName.numero))}")
         if routeurName.border:
             for i,c in routeurName.interfaces.items():
-                if c[2] != routeurName.AS_n:
+                if c[1].AS_n != routeurName.AS_n:
                     lignes_protocole.append(" passive-interface {i}")
     
     return lignes_protocole
