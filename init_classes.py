@@ -99,4 +99,4 @@ def ip_def(subnet,n):
 # # #lignes de test des fonctions
 # dico_json = load_intent("intent.json")
 # liste_AS = init_as(dico_json)
-# init_routeur_adresses(dico_json)
+# init_routeur_adresses(dico_json) aha

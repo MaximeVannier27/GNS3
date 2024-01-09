@@ -21,7 +21,7 @@ class Router:
         self.loopback = None        #adresse de loopback du router
         self.numero = None          # numero du routeur
         self.interfaces = {}        #dico interface : [adresse ip, voisin (objet de type routeur)]
-        self.border = False         #permet de savoir si le router est en bordure de l'AS ou non
+        self.border = False         #permet de savoir si le router est en bordure de l'AS ou non 
         self.configList = []        #liste de strings correspondant aux lignes du fichier config du routeur
 
     def __repr__(self):
