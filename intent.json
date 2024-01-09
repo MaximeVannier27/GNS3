@@ -4,8 +4,8 @@
         "relationships": {
             "2": "client"
         },
-        "ip_range": "plage ip",
-        "loopback_range": "plage loopback",
+        "ip_range": "2001:192:168::",
+        "loopback_range": "200::",
         "routers": {
             "1": {
                 "i_interfaces": {
@@ -38,8 +38,8 @@
         "relationships": {
             "1": "provider"
         },
-        "ip_range": "plage ip",
-        "loopback_range": "plage loopback",
+        "ip_range": "2002:192:168::",
+        "loopback_range": "200::",
         "routers": {
             "3": {
                 "i_interfaces": {

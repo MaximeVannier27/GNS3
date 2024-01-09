@@ -1,5 +1,6 @@
 import json
 from classes import Router, AS
+import ipaddress
 
 def load_intent(intent):
     # ouverture de l'intent file
@@ -23,7 +24,7 @@ def init_as(dico_as):
         globals()[num_as] = AS(as_n)
         globals()[num_as].igp = value["IGP"]
         globals()[num_as].ip = value["ip_range"]
-        globals()[num_as].loopback = value["loopback_range"]
+        globals()[num_as].loopback = ipaddress.IPv6Address(value["loopback_range"])
         liste_as.append(globals()[num_as])      #ajout de l'AS à la liste des AS créés
 
         for (router_n,attributs) in value["routers"].items():
@@ -47,7 +48,7 @@ def init_routeur_adresses(dico_as):
     """
 
     for as_n,value in dico_as.items():
-        compteur_loopback = 0
+        compteur_loopback = 1
         compteur_ip = 0
 
         num_as = f"as_{as_n}"                   #nom de la variable de type AS créée
@@ -59,6 +60,8 @@ def init_routeur_adresses(dico_as):
             routeur_courant.loopback = loopback(as_courant.loopback,compteur_loopback)
             compteur_loopback+=1
             
+            if connexions["e_interfaces"] !=None:
+                routeur_courant.border = True
             for interface,(voisin,ip) in connexions["e_interfaces"].items():
                 routeur_courant.interfaces[interface]=[ip,globals()[voisin]]
 
@@ -77,15 +80,15 @@ def init_routeur_adresses(dico_as):
 ces deux fonctions sont absolument absurdes pour l'instant mdrrr c'est juste histoire de
 """
 
-def loopback(range,compteur):
-    ip = str(range) + str(compteur)
+def loopback(range_ip,compteur):
+    ip = range_ip + compteur
     return ip
 
-def ip_def(range,compteur):
-    ip = str(range) + str(compteur)
+def ip_def(range_ip,compteur):
+    ip = str(range_ip) + str(compteur)
     return ip
 
 #lignes de test des fonctions
-# dico_json = load_intent("intent.json")
-# liste_AS = init_as(dico_json)
-# init_routeur_adresses(dico_json)
+dico_json = load_intent("intent.json")
+liste_AS = init_as(dico_json)
+init_routeur_adresses(dico_json)
