@@ -3,7 +3,7 @@ from init_classes import init_as
 
 
 def initConfigList(routerName):
-    routerName.configList = ["!","","!",f"! Last configuration change at {datetime.now()}", "!", "version 15.2", "service timestamps debug datetime msec", "service timestamps log datetime msec", "!", "hostname ", "!", "boot-start-marker", "boot-end-marker", "!", "!", "!", "no aaa new-model", "no ip icmp rate-limit unreachable", "ip cef", "!", "!", "!", "!", "!", "!", "no ip domain lookup", "ipv6 unicast-routing", "ipv6 cef", "!", "!", "multilink bundle-name authenticated", "!", "!", "!", "!", "!", "!", "!", "!", "!", "ip tcp synwait-time 5", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!"]
+    routerName.configList = ["!","","!",f"! Last configuration change at {datetime.now()}", "!", "version 15.2", "service timestamps debug datetime msec", "service timestamps log datetime msec", "!", f"hostname R{routerName.numero} ", "!", "boot-start-marker", "boot-end-marker", "!", "!", "!", "no aaa new-model", "no ip icmp rate-limit unreachable", "ip cef", "!", "!", "!", "!", "!", "!", "no ip domain lookup", "ipv6 unicast-routing", "ipv6 cef", "!", "!", "multilink bundle-name authenticated", "!", "!", "!", "!", "!", "!", "!", "!", "!", "ip tcp synwait-time 5", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!"]
 
 
 def creationConfigFinal(routerName):
@@ -24,10 +24,19 @@ def initInterface(routeurName,asName):
     asName est l'AS auquel il appartient (objet de classe AS)
     """
     
-    lignes_total = []           #initialisation du texte à ajouter à la config
+    lignes_interface = []           #initialisation du texte à ajouter à la config
+
+    lignes_interface.append("interface Loopback0")
+    lignes_interface.append(" no ip address")
+    lignes_interface.append(f" ipv6 address {routeurName.loopback}/128")
+    lignes_interface.append(" ipv6 enable")
+    if asName.igp == "RIP":
+        lignes_interface.append(" ipv6 rip prot_RIP enable")
+    elif asName.igp == "OSPF":
+        lignes_interface.append(" ipv6 ospf 1 area 0")
+    lignes_interface.append("!")
 
     for interface,(ip,voisin) in routeurName.interfaces.items():
-        lignes_interface = []
         lignes_interface.append(f"interface {interface}")  
         lignes_interface.append(" no ip address")
         lignes_interface.append(" negotiation auto")
@@ -40,9 +49,8 @@ def initInterface(routeurName,asName):
             lignes_interface.append(" ipv6 ospf 1 area 0")
         lignes_interface.append("!")
 
-        lignes_total+=lignes_interface
 
-    return lignes_total
+    return lignes_interface
 
 
 
@@ -57,6 +65,7 @@ def initBGP(routeurName,asName):
 
     for routeur_AS in asName.routers:
         if routeur_AS != routeurName:
+            print(routeur_AS.numero)
             lignes_bgp.append(f" neighbor {routeur_AS.loopback} remote-as {routeur_AS.AS_n}")     #rajouter l'interface loopback au fichier d'intention
             lignes_bgp.append(f" neighbor {routeur_AS.loopback} update-source Loopback0")
 
@@ -86,13 +95,11 @@ def initAddressFamily(routerName,asName):
 
     if routerName.border:
         for i in asName.lienslocaux.values(): #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
-            lignes_addressfamily.append(f"  network {i}")
-
-        """ JE SUIS DESOLE J'AI PANIQUE C'EST SUREMENT INCOMPREHENSIBLE ET PAS OPTI MAIS J'AI PAS"""
-        """franchement ça a l'air fonctionnel tkt, j'ai juste changé un peu la forme"""
+            lignes_addressfamily.append(f"  network {i}/64")
 
         for i,(ip,voisin) in routerName.interfaces.items(): #récupérer toutes les interfaces des routeurs d'AS voisines, connectées a routeurName 
             if voisin.AS_n != routerName.AS_n:
+                tmp = None
                 for j in voisin.interfaces.values():
                     if j[1] == routerName:
                         tmp = j[0]

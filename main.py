@@ -10,7 +10,7 @@ init_routeur_adresses(dico_json)
 for AS_courant in liste_AS:
     for routeur_courant in AS_courant.routers:
 
-        #print(f"Début routeur {routeur_courant.numero} de l'AS {routeur_courant.AS_n}")
+        print(f"Début routeur {routeur_courant.numero} de l'AS {routeur_courant.AS_n}")
 
         initConfigList(routeur_courant)
         routeur_courant.configList += initInterface(routeur_courant,AS_courant)
@@ -19,6 +19,6 @@ for AS_courant in liste_AS:
         routeur_courant.configList += initProtocole(routeur_courant,AS_courant)
         routeur_courant.configList += fin_config
         creationConfigFinal(routeur_courant)
-        #print(f"Fin routeur {routeur_courant.numero} de l'AS {routeur_courant.AS_n}")
+        print(f"Fin routeur {routeur_courant.numero} de l'AS {routeur_courant.AS_n}")
 
 
