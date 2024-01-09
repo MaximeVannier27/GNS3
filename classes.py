@@ -4,8 +4,8 @@ class AS:
         self.igp = None         #IGP utilisé au sein de l'AS
         self.routers = []       #liste d'élements de type routers.
         self.rel = {}           #dico AS : relations à cet AS
-        self.ip  = None         #range ip
-        self.loopback = None    #range ip loopback
+        self.ip  = []         #range ip
+        self.loopback = []    #range ip loopback
         self.lienslocaux = {}   # dico (r1,r2) : "subnet ip"
 
 

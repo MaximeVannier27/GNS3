@@ -4,8 +4,8 @@
         "relationships": {
             "2": "client"
         },
-        "ip_range": "2001:192:168::",
-        "loopback_range": "200::",
+        "ip_range": ["2001:192:168::","2001:192:168:255::"],
+        "loopback_range": ["200::","200::255"],
         "routers": {
             "1": {
                 "i_interfaces": {
@@ -38,8 +38,8 @@
         "relationships": {
             "1": "provider"
         },
-        "ip_range": "2002:192:168::",
-        "loopback_range": "200::",
+        "ip_range": ["2002:192:168::","2002:192:168:255::"],
+        "loopback_range": ["200::","200::255"],
         "routers": {
             "3": {
                 "i_interfaces": {
@@ -55,7 +55,7 @@
             "4": {
                 "i_interfaces": {
                     "GigabitEthernet1/0": "R3",
-                    "GigabitEthernet2/0": "R5"
+                    "GigabitEthernet2/0": "R6"
                 },
                 "e_interfaces": {}
             },
