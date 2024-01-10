@@ -22,7 +22,7 @@ for AS_courant in liste_AS:
         routeur_courant.configList += initProtocole(routeur_courant,AS_courant)
         routeur_courant.configList += fin_config
         creationConfigFinal(routeur_courant)
-        drag_and_drop("projet_GNS3",correspondances,routeur_courant.numero)
+        #drag_and_drop("projet_GNS3",correspondances,routeur_courant.numero)
         print(f"Fin routeur {routeur_courant.numero} de l'AS {routeur_courant.AS_n}")
 
 

@@ -154,4 +154,4 @@ def drag_and_drop(projet,dico,num):
     nouveau = os.path.join(os.getcwd(), projet, "project_files", dico[cle],"configs",nom)
     print(ancien)
     print(nouveau)
-    #os.rename(ancien,nouveau)
+    os.rename(ancien,nouveau)
