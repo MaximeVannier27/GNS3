@@ -1,6 +1,9 @@
 from fonctions import *
 from init_classes import *
 
+# dictionnaire qui stocke les correspondances entre les noms de dossier et les routeurs
+correspondances = {"R1": "dossier1", "R2": "dossier2", "R3": "dossier3", "R4": "dossier4", "R5": "dossier5", "R6": "dossier6"}
+
 fin_config = ["!", "!", "!", "control-plane", "!", "!", "line con 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line aux 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line vty 0 4", " login", "!", "!", "end"]
 
 dico_json = load_intent("intent.json")
@@ -19,6 +22,7 @@ for AS_courant in liste_AS:
         routeur_courant.configList += initProtocole(routeur_courant,AS_courant)
         routeur_courant.configList += fin_config
         creationConfigFinal(routeur_courant)
+        drag_and_drop("projet_GNS3",correspondances,routeur_courant.numero)
         print(f"Fin routeur {routeur_courant.numero} de l'AS {routeur_courant.AS_n}")
 
 

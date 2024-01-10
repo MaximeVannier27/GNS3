@@ -1,5 +1,6 @@
 from datetime import datetime
 from init_classes import init_as
+import os
 
 
 def initConfigList(routerName):
@@ -138,4 +139,19 @@ def initProtocole(routeurName,asName):
                     lignes_protocole.append(" passive-interface {i}")
     
     return lignes_protocole
-    
+
+
+def drag_and_drop(projet,dico,num):
+    """
+    fonction qui déplace les fichiers configs dans les bons dossiers
+    la variable projet correspond au nom du dossier de projet GNS3 et le dico est correspondances
+    num est le numéro du routeur traité
+    """
+    cle = "R" + str(num)
+    nom = f"i{num}_startup-config.cfg"
+    relatif = projet
+    ancien = os.path.join(os.getcwd(), nom)
+    nouveau = os.path.join(os.getcwd(), projet, "project_files", dico[cle],"configs",nom)
+    print(ancien)
+    print(nouveau)
+    #os.rename(ancien,nouveau)
