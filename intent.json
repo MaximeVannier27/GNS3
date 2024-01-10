@@ -10,60 +10,130 @@
             "1": {
                 "i_interfaces": {
                     "GigabitEthernet1/0": "R2",
-                    "GigabitEthernet2/0": "R5"
+                    "GigabitEthernet2/0": "R3"
                 },
                 "e_interfaces": {}
             },
             "2": {
                 "i_interfaces": {
-                    "GigabitEthernet1/0": "R1"
+                    "GigabitEthernet1/0": "R1",
+                    "GigabitEthernet2/0": "R4",
+                    "FastEthernet0/0": "R3"
                 },
-                "e_interfaces": {
-                    "GigabitEthernet2/0": [
-                        "R3",
-                        "2001:192:168:3::2"
-                    ]
-                }
+                "e_interfaces": {}
+            },
+            "3": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R5",
+                    "GigabitEthernet2/0": "R1",
+                    "FastEthernet0/0": "R2"
+                },
+                "e_interfaces": {}
+            },
+            "4": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R6",
+                    "GigabitEthernet2/0": "R2",
+                    "GigabitEthernet3/0": "R7",
+                    "FastEthernet0/0": "R5"
+                },
+                "e_interfaces": {}
             },
             "5": {
                 "i_interfaces": {
-                    "GigabitEthernet2/0": "R1"
+                    "GigabitEthernet1/0": "R3",
+                    "GigabitEthernet2/0": "R7",
+                    "GigabitEthernet3/0": "R6",
+                    "FastEthernet0/0": "R4"
                 },
                 "e_interfaces": {}
+            },
+            "6": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R4",
+                    "FastEthernet0/0": "R5"
+                },
+                "e_interfaces": {
+                    "GigabitEthernet2/0": ["R8","2001:192:170::6"]
+                }
+            },
+            "7": {
+                "i_interfaces": {
+                    "GigabitEthernet2/0": "R5",
+                    "FastEthernet0/0": "R4"
+                },
+                "e_interfaces": {
+                    "GigabitEthernet1/0": ["R9","2001:192:171::7"]
+                }
             }
-        }
-    },
+    }   
+},
     "2": {
         "IGP": "OSPF",
         "relationships": {
             "1": "provider"
         },
         "ip_range": ["2002:192:168::","2002:192:168:255::"],
-        "loopback_range": ["200::","200::255"],
+        "loopback_range": ["300::","300::255"],
         "routers": {
-            "3": {
+            "14": {
                 "i_interfaces": {
-                    "GigabitEthernet1/0": "R4"
+                    "GigabitEthernet1/0": "R12",
+                    "GigabitEthernet2/0": "R13"
+                },
+                "e_interfaces": {}
+            },
+            "12": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R14",
+                    "GigabitEthernet2/0": "R10",
+                    "FastEthernet0/0": "R13"
+                },
+                "e_interfaces": {}
+            },
+            "13": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R11",
+                    "GigabitEthernet2/0": "R14",
+                    "FastEthernet0/0": "R12"
+                },
+                "e_interfaces": {}
+            },
+            "10": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R8",
+                    "GigabitEthernet2/0": "R12",
+                    "GigabitEthernet3/0": "R9",
+                    "FastEthernet0/0": "R11"
+                },
+                "e_interfaces": {}
+            },
+            "11": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R13",
+                    "GigabitEthernet2/0": "R9",
+                    "GigabitEthernet3/0": "R8",
+                    "FastEthernet0/0": "R10"
+                },
+                "e_interfaces": {}
+            },
+            "8": {
+                "i_interfaces": {
+                    "GigabitEthernet1/0": "R10",
+                    "FastEthernet0/0": "R11"
                 },
                 "e_interfaces": {
-                    "GigabitEthernet2/0": [
-                        "R2",
-                        "2001:192:168:3::3"
-                    ]
+                    "GigabitEthernet2/0": ["R6","2001:192:170::8"]
                 }
             },
-            "4": {
+            "9": {
                 "i_interfaces": {
-                    "GigabitEthernet1/0": "R3",
-                    "GigabitEthernet2/0": "R6"
+                    "GigabitEthernet2/0": "R11",
+                    "FastEthernet0/0": "R10"
                 },
-                "e_interfaces": {}
-            },
-            "6": {
-                "i_interfaces": {
-                    "GigabitEthernet2/0": "R4"
-                },
-                "e_interfaces": {}
+                "e_interfaces": {
+                    "GigabitEthernet1/0": ["R7","2001:192:171::9"]
+                }
             }
         }
     }

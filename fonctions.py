@@ -59,7 +59,7 @@ def initBGP(routeurName,asName):
 
     lignes_bgp = []
     lignes_bgp.append(f"router bgp {asName.num}")
-    lignes_bgp.append(f" bgp router-id {'.'.join(4*str(routeurName.numero))}")
+    lignes_bgp.append(f" bgp router-id {routeurName.numero}.{routeurName.numero}.{routeurName.numero}.{routeurName.numero}")
     lignes_bgp.append(" bgp log-neighbor-changes")
     lignes_bgp.append(" no bgp default ipv4-unicast")
 
@@ -131,7 +131,7 @@ def initProtocole(routeurName,asName):
         lignes_protocole.append(" redistribute connected")
     elif asName.igp == "OSPF":
         lignes_protocole.append("ipv6 router ospf 1")
-        lignes_protocole.append(f" router-id {'.'.join(4*str(routeurName.numero))}")
+        lignes_protocole.append(f" router-id {routeurName.numero}.{routeurName.numero}.{routeurName.numero}.{routeurName.numero}")
         if routeurName.border:
             for i,c in routeurName.interfaces.items():
                 if c[1].AS_n != routeurName.AS_n:
