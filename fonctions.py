@@ -37,7 +37,9 @@ def initInterface(routeurName,asName):
         lignes_interface.append(" ipv6 ospf 1 area 0")
     lignes_interface.append("!")
 
-    for interface,(ip,voisin) in routeurName.interfaces.items():
+    for interface,valeur in routeurName.interfaces.items():
+        ip=valeur[0]
+        voisin=valeur[1]
         lignes_interface.append(f"interface {interface}")  
         lignes_interface.append(" no ip address")
         lignes_interface.append(" negotiation auto")
@@ -48,6 +50,10 @@ def initInterface(routeurName,asName):
             lignes_interface.append(" ipv6 rip prot_RIP enable")
         elif asName.igp == "OSPF":
             lignes_interface.append(" ipv6 ospf 1 area 0")
+            if voisin.AS_n==asName.num:
+                cost = valeur[2]
+                if cost:
+                    lignes_interface.append(f" ipv6 ospf cost {cost}")
         lignes_interface.append("!")
 
 
@@ -98,7 +104,9 @@ def initAddressFamily(routerName,asName):
         for i in asName.lienslocaux.values(): #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
             lignes_addressfamily.append(f"  network {i}/64")
 
-        for i,(ip,voisin) in routerName.interfaces.items(): #récupérer toutes les interfaces des routeurs d'AS voisines, connectées a routeurName 
+        for i,valeur in routerName.interfaces.items(): #récupérer toutes les interfaces des routeurs d'AS voisines, connectées a routeurName 
+            ip=valeur[0]
+            voisin=valeur[1]
             if voisin.AS_n != routerName.AS_n:
                 tmp = None
                 for j in voisin.interfaces.values():

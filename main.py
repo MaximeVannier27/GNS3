@@ -6,7 +6,7 @@ correspondances = {"R1": "dossier1", "R2": "dossier2", "R3": "dossier3", "R4": "
 
 fin_config = ["!", "!", "!", "control-plane", "!", "!", "line con 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line aux 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line vty 0 4", " login", "!", "!", "end"]
 
-dico_json = load_intent("intent.json")
+dico_json = load_intent("intent_old.json")
 liste_AS = init_as(dico_json)
 init_routeur_adresses(dico_json)
 

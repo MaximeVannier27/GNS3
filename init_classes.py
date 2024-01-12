@@ -66,10 +66,18 @@ def init_routeur_adresses(dico_as):
             
             if connexions["e_interfaces"] !=None:
                 routeur_courant.border = True
-            for interface,(voisin,ip) in connexions["e_interfaces"].items():
+            for interface,valeur in connexions["e_interfaces"].items():
+                voisin=valeur[0]
+                ip=valeur[1]
                 routeur_courant.interfaces[interface]=[ip,globals()[voisin]]
 
-            for interface,voisin in connexions["i_interfaces"].items():
+
+            for interface,valeur in connexions["i_interfaces"].items():
+                if as_courant.igp == "OSPF":
+                    voisin,cost = valeur    #dans ce cas valeur est une liste
+                else:
+                    voisin = valeur         #si on est en rip valeur est un string
+
                 routeur_voisin = globals()[voisin]
                 if (routeur_voisin,routeur_courant) not in as_courant.lienslocaux.keys():
                     subnet = ipaddress.IPv6Address(as_courant.ip[0])
@@ -80,11 +88,16 @@ def init_routeur_adresses(dico_as):
                     as_courant.lienslocaux[(routeur_courant,routeur_voisin)] = subnet
                     ip_1= ip_def(subnet,1)
                     ip_2= ip_def(subnet,2)
-                    routeur_courant.interfaces[interface]=[ip_1,routeur_voisin]
-                    routeur_voisin.interfaces[interface]=[ip_2,routeur_courant]
+                    if as_courant.igp == "OSPF":
+                        routeur_courant.interfaces[interface]=[ip_1,routeur_voisin,cost]
+                        routeur_voisin.interfaces[interface]=[ip_2,routeur_courant,cost]
+                    else:
+                        routeur_courant.interfaces[interface]=[ip_1,routeur_voisin]
+                        routeur_voisin.interfaces[interface]=[ip_2,routeur_courant]
+
                     compteur_ip+=1
 
-            #print(f"Paramétrage du routeur R{routeur_courant.numero} :\n{routeur_courant.interfaces}\nLoopback:{routeur_courant.loopback}")        
+            print(f"Paramétrage du routeur R{routeur_courant.numero} :\n{routeur_courant.interfaces}\nLoopback:{routeur_courant.loopback}")        
 
 
 
@@ -96,7 +109,7 @@ def ip_def(subnet,n):
     ip = subnet + n
     return ip
 
-# # #lignes de test des fonctions
-# dico_json = load_intent("intent.json")
+# #lignes de test des fonctions
+# dico_json = load_intent("intent_old.json")
 # liste_AS = init_as(dico_json)
-# init_routeur_adresses(dico_json) aha
+# init_routeur_adresses(dico_json)
