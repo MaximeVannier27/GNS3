@@ -80,7 +80,15 @@ def initBGP(routeurName,asName):
                     temp = c[0]
                     break
             lignes_bgp.append(f" neighbor {temp} remote-as {routeur_voisin.AS_n}")
+            lignes_bgp.append(f" neighbor {temp} send-community")
+            lignes_bgp.append(f" neighbor {temp} route-map {asName.rel[asName.num]} out")
     lignes_bgp.append(" !")
+    lignes_bgp.append(" no auto-summary")
+    lignes_bgp.append(" !")
+    lignes_bgp.append("ip classless")
+    lignes_bgp.append("ip bgp-community new-format")
+
+    
     return lignes_bgp
 
 
