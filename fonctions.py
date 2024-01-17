@@ -75,6 +75,7 @@ def initBGP(routeurName,asName):
             #print(routeur_AS.numero)
             lignes_bgp.append(f" neighbor {routeur_AS.loopback} remote-as {routeur_AS.AS_n}")     #rajouter l'interface loopback au fichier d'intention
             lignes_bgp.append(f" neighbor {routeur_AS.loopback} update-source Loopback0")
+            lignes_bgp.append(f" neighbor {routeur_AS.loopback} send-community")
 
     for interface,valeur in routeurName.interfaces.items():
         routeur_voisin = valeur[1]
@@ -86,7 +87,12 @@ def initBGP(routeurName,asName):
                     temp = c[0]
                     break
             lignes_bgp.append(f" neighbor {temp} remote-as {routeur_voisin.AS_n}")
-    lignes_bgp.append(" !")
+            lignes_bgp.append(f" neighbor {temp} send-community")
+    lignes_bgp.append(" no auto-summary")
+    lignes_bgp.append("!")
+    lignes_bgp.append("ip classless")
+    lignes_bgp.append("ip bgp-community new-format")
+    lignes_bgp.append("!")
     return lignes_bgp
 
 
