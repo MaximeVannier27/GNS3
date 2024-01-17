@@ -88,11 +88,7 @@ def initBGP(routeurName,asName):
                     break
             lignes_bgp.append(f" neighbor {temp} remote-as {routeur_voisin.AS_n}")
             lignes_bgp.append(f" neighbor {temp} send-community")
-    lignes_bgp.append(" no auto-summary")
-    lignes_bgp.append("!")
-    lignes_bgp.append("ip classless")
-    lignes_bgp.append("ip bgp-community new-format")
-    lignes_bgp.append("!")
+
     return lignes_bgp
 
 
@@ -127,6 +123,9 @@ def initAddressFamily(routerName,asName):
 
     lignes_addressfamily.append(" exit-address-family")
     lignes_addressfamily.append("!")
+    lignes_addressfamily.append("ip classless")
+    lignes_addressfamily.append("ip bgp-community new-format")
+    lignes_addressfamily.append("!")
     
     return lignes_addressfamily
 
@@ -150,7 +149,7 @@ def initProtocole(routeurName,asName):
         if routeurName.border:
             for i,c in routeurName.interfaces.items():
                 if c[1].AS_n != routeurName.AS_n:
-                    lignes_protocole.append(" passive-interface {i}")
+                    lignes_protocole.append(f" passive-interface {i}")
     
     return lignes_protocole
 
