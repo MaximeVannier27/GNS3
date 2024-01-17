@@ -153,6 +153,22 @@ def initProtocole(routeurName,asName):
     
     return lignes_protocole
 
+def route_map(routeurName,asName):
+    lignes_rules=[]
+    #provider
+    lignes_rules.append("route-map tomyprovider deny 20",f" match community {routeurName.numero}:300","!")
+    lignes_rules.append("route-map tomyprovider deny 21",f" match community {routeurName.numero}:100","!")
+    lignes_rules.append("route-map tomyprovider permit 30","!")
+    lignes_rules.append("route-map frommyprovider permit 20"," set local-preference 50","!")
+    #provider
+    lignes_rules.append("route-map tomyprovider deny 20",f" match community {routeurName.numero}:300","!")
+    lignes_rules.append("route-map tomyprovider deny 21",f" match community {routeurName.numero}:100","!")
+    lignes_rules.append("route-map tomyprovider permit 30","!")
+    lignes_rules.append("route-map frommyprovider permit 20"," set local-preference 50","!")
+ 
+
+
+
 
 def drag_and_drop(projet,dico,num):
     """
