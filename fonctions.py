@@ -88,11 +88,7 @@ def initBGP(routeurName,asName):
                     break
             lignes_bgp.append(f" neighbor {temp} remote-as {routeur_voisin.AS_n}")
             lignes_bgp.append(f" neighbor {temp} send-community")
-    lignes_bgp.append(" no auto-summary")
-    lignes_bgp.append("!")
-    lignes_bgp.append("ip classless")
-    lignes_bgp.append("ip bgp-community new-format")
-    lignes_bgp.append("!")
+
     return lignes_bgp
 
 
@@ -126,6 +122,9 @@ def initAddressFamily(routerName,asName):
             lignes_addressfamily.append(f"  neighbor {r.loopback} activate") #@ loopback des routeurs de l'AS
 
     lignes_addressfamily.append(" exit-address-family")
+    lignes_addressfamily.append("!")
+    lignes_addressfamily.append("ip classless")
+    lignes_addressfamily.append("ip bgp-community new-format")
     lignes_addressfamily.append("!")
     
     return lignes_addressfamily
