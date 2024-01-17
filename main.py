@@ -20,6 +20,8 @@ for AS_courant in liste_AS:
         routeur_courant.configList += initBGP(routeur_courant,AS_courant)
         routeur_courant.configList += initAddressFamily(routeur_courant,AS_courant)
         routeur_courant.configList += initProtocole(routeur_courant,AS_courant)
+        if routeur_courant.border:
+            routeur_courant.configList+= route_map_rules(routeur_courant,AS_courant)
         routeur_courant.configList += fin_config
         creationConfigFinal(routeur_courant)
         #drag_and_drop("projet_GNS3",correspondances,routeur_courant.numero)

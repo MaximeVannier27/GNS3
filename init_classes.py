@@ -25,6 +25,8 @@ def init_as(dico_as):
         globals()[num_as].igp = value["IGP"]
         globals()[num_as].ip += value["ip_range"]
         globals()[num_as].loopback += value["loopback_range"]
+        for as_voisin,relation in value["relationships"].items():
+            globals()[num_as].rel[as_voisin]=relation   
         liste_as.append(globals()[num_as])      #ajout de l'AS à la liste des AS créés
 
         for (router_n,attributs) in value["routers"].items():
@@ -97,7 +99,7 @@ def init_routeur_adresses(dico_as):
 
                     compteur_ip+=1
 
-            print(f"Paramétrage du routeur R{routeur_courant.numero} :\n{routeur_courant.interfaces}\nLoopback:{routeur_courant.loopback}")        
+            #print(f"Paramétrage du routeur R{routeur_courant.numero} :\n{routeur_courant.interfaces}\nLoopback:{routeur_courant.loopback}")        
 
 
 

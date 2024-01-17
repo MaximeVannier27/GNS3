@@ -116,6 +116,18 @@ def initAddressFamily(routerName,asName):
                         tmp = j[0]
                         break
                 lignes_addressfamily.append(f"  neighbor {tmp} activate") #@ip de l'interface du routeur de l'AS voisine
+                if asName.rel[voisin.AS_n]=="client":
+                    lignes_addressfamily.append(f" neighbor {tmp} route-map frommyclient in")
+
+
+                elif asName.rel[voisin.AS_n]=="provider":
+                    lignes_addressfamily.append(f" neighbor {tmp} route-map frommyprovider in")
+                    lignes_addressfamily.append(f" neighbor {tmp} route-map tomyprovider out")
+
+                elif asName.rel[voisin.AS_n]=="peer":
+                    lignes_addressfamily.append(f" neighbor {tmp} route-map frommypeer in")
+                    lignes_addressfamily.append(f" neighbor {tmp} route-map tomypeer out")                    
+
 
     for r in asName.routers:
         if r != routerName:         #pas sûre que le test entre deux classes routeurs soit défini
@@ -153,19 +165,59 @@ def initProtocole(routeurName,asName):
     
     return lignes_protocole
 
-def route_map(routeurName,asName):
-    #lignes à éventuellement ajouter à un router de bordure
+def route_map_rules(routeurName,AsName):
+
     lignes_rules=[]
-    #provider
-    lignes_rules.append("route-map tomyprovider deny 20",f" match community {routeurName.numero}:300","!")
-    lignes_rules.append("route-map tomyprovider deny 21",f" match community {routeurName.numero}:100","!")
-    lignes_rules.append("route-map tomyprovider permit 30","!")
-    lignes_rules.append("route-map frommyprovider permit 20"," set local-preference 50","!")
-    #client
-    lignes_rules.append("route-map frommyclient permit 20"," set local-preference 150","!")
-    
-    #peer
-    lignes_rules.append("route-map frommypeer permit 20"," set local-preference 120","!")
+    connexions=[]     #type d'AS connecté sur ce routeur
+
+    for valeur in routeurName.interfaces.values(): #récupérer toutes les interfaces des routeurs d'AS voisines, connectées a routeurName 
+        voisin=valeur[1]
+
+        if voisin.AS_n != routeurName.AS_n:
+            connexions.append(AsName.rel[voisin.AS_n])
+
+    if "provider" in connexions:
+        lignes_rules.append("route-map frommyprovider permit 20")
+        lignes_rules.append(" set local-preference 50")
+        lignes_rules.append(f" set community {routeurName.AS_n}:100")
+        lignes_rules.append("!")
+
+        lignes_rules.append("route-map tomyprovider deny 20")
+        lignes_rules.append(f" match community {routeurName.AS_n}:300")
+        lignes_rules.append("!")
+
+        lignes_rules.append("route-map tomyprovider deny 21")
+        lignes_rules.append(f" match community {routeurName.AS_n}:100")
+        lignes_rules.append("!")
+
+        lignes_rules.append("route-map tomyprovider permit 30")
+        lignes_rules.append("!")
+
+    if "client" in connexions:
+        lignes_rules.append("route-map frommyclient permit 20")
+        lignes_rules.append(" set local-preference 150")
+        lignes_rules.append(f" set community {routeurName.AS_n}:200")
+        lignes_rules.append("!")
+        
+    if "peer" in connexions:
+        lignes_rules.append("route-map frommypeer permit 20")
+        lignes_rules.append(" set local-preference 120")
+        lignes_rules.append(f" set community {routeurName.AS_n}:300")
+        lignes_rules.append("!")
+
+        lignes_rules.append("route-map tomypeer deny 20")
+        lignes_rules.append(f" match community {routeurName.AS_n}:100")
+        lignes_rules.append("!")
+
+        lignes_rules.append("route-map tomypeer deny 21")
+        lignes_rules.append(f" match community {routeurName.AS_n}:300")
+        lignes_rules.append("!")
+
+        lignes_rules.append("route-map tomypeer permit 30")
+        lignes_rules.append("!")
+
+
+    return lignes_rules
 
 
 
