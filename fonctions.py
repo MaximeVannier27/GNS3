@@ -72,7 +72,7 @@ def initBGP(routeurName,asName):
 
     for routeur_AS in asName.routers:
         if routeur_AS != routeurName:
-            print(routeur_AS.numero)
+            #print(routeur_AS.numero)
             lignes_bgp.append(f" neighbor {routeur_AS.loopback} remote-as {routeur_AS.AS_n}")     #rajouter l'interface loopback au fichier d'intention
             lignes_bgp.append(f" neighbor {routeur_AS.loopback} update-source Loopback0")
 
