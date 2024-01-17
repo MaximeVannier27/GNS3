@@ -117,16 +117,16 @@ def initAddressFamily(routerName,asName):
                         break
                 lignes_addressfamily.append(f"  neighbor {tmp} activate") #@ip de l'interface du routeur de l'AS voisine
                 if asName.rel[voisin.AS_n]=="client":
-                    lignes_addressfamily.append(f" neighbor {tmp} route-map frommyclient in")
+                    lignes_addressfamily.append(f"  neighbor {tmp} route-map frommyclient in")
 
 
                 elif asName.rel[voisin.AS_n]=="provider":
-                    lignes_addressfamily.append(f" neighbor {tmp} route-map frommyprovider in")
-                    lignes_addressfamily.append(f" neighbor {tmp} route-map tomyprovider out")
+                    lignes_addressfamily.append(f"  neighbor {tmp} route-map frommyprovider in")
+                    lignes_addressfamily.append(f"  neighbor {tmp} route-map tomyprovider out")
 
                 elif asName.rel[voisin.AS_n]=="peer":
-                    lignes_addressfamily.append(f" neighbor {tmp} route-map frommypeer in")
-                    lignes_addressfamily.append(f" neighbor {tmp} route-map tomypeer out")                    
+                    lignes_addressfamily.append(f"  neighbor {tmp} route-map frommypeer in")
+                    lignes_addressfamily.append(f"  neighbor {tmp} route-map tomypeer out")                    
 
 
     for r in asName.routers:
@@ -138,6 +138,10 @@ def initAddressFamily(routerName,asName):
     lignes_addressfamily.append("ip classless")
     lignes_addressfamily.append("ip bgp-community new-format")
     lignes_addressfamily.append("!")
+    lignes_addressfamily.append(f"ip community-list standard provider permit {routerName.AS_n}:100")
+    lignes_addressfamily.append(f"ip community-list standard client permit {routerName.AS_n}:200")
+    lignes_addressfamily.append(f"ip community-list standard peer permit {routerName.AS_n}:300")
+    lignes_addressfamily.append("!")   
     
     return lignes_addressfamily
 
