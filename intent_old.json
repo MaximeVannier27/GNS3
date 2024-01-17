@@ -43,25 +43,26 @@
         "routers": {
             "3": {
                 "i_interfaces": {
-                    "GigabitEthernet1/0": "R4"
+                    "GigabitEthernet1/0": ["R4",0]
                 },
                 "e_interfaces": {
                     "GigabitEthernet2/0": [
                         "R2",
-                        "2001:192:168:3::3"
+                        "2001:192:168:3::3",
+                        0
                     ]
                 }
             },
             "4": {
                 "i_interfaces": {
-                    "GigabitEthernet1/0": "R3",
-                    "GigabitEthernet2/0": "R6"
+                    "GigabitEthernet1/0": ["R3",0],
+                    "GigabitEthernet2/0": ["R6",10]
                 },
                 "e_interfaces": {}
             },
             "6": {
                 "i_interfaces": {
-                    "GigabitEthernet2/0": "R4"
+                    "GigabitEthernet2/0": ["R4",10]
                 },
                 "e_interfaces": {}
             }
