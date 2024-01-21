@@ -226,17 +226,22 @@ def route_map_rules(routeurName,AsName):
 
 
 
-def drag_and_drop(projet,dico,num):
+def drag_and_drop():
     """
     fonction qui déplace les fichiers configs dans les bons dossiers
     la variable projet correspond au nom du dossier de projet GNS3 et le dico est correspondances
     num est le numéro du routeur traité
     """
-    cle = "R" + str(num)
-    nom = f"i{num}_startup-config.cfg"
-    relatif = projet
-    ancien = os.path.join(os.getcwd(), nom)
-    nouveau = os.path.join(os.getcwd(), projet, "project_files", dico[cle],"configs",nom)
-    print(ancien)
-    print(nouveau)
-    os.rename(ancien,nouveau)
+    projet = str(input("Repertoire du sujet GNS3: "))
+    repertoire_configs = os.listdir(os.path.join(os.getcwd(), projet, "project-files", "dynamips"))
+
+    for dossier in repertoire_configs:
+        nom_cfg = os.listdir(os.path.join(os.getcwd(), projet, "project-files", "dynamips",dossier,"configs"))
+        num = nom_cfg[0][1:-19]
+        nom = f"i{num}_startup-config.cfg"
+
+        ancien = os.path.join(os.getcwd(), nom)
+        nouveau = os.path.join(os.getcwd(), projet, "project-files","dynamips", dossier,"configs",nom)
+
+
+        os.replace(ancien,nouveau)
