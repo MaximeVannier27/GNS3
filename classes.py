@@ -3,13 +3,16 @@ class AS:
         self.num = numero       #numéro de l'AS
         self.igp = None         #IGP utilisé au sein de l'AS
         self.routers = []       #liste d'élements de type routers.
-        self.rel = {}           #dico AS : relations à cet AS
-        self.ip  = []         #range ip
-        self.loopback = []    #range ip loopback
+        self.rel = {}           #dico AS : relations de cet AS (les valeurs sont client provider ou peer)
+        self.ip  = []           #plage d'adresses ip disponibles pour cet AS
+        self.loopback = []      #plage d'adresses de loopback disponibles AS
         self.lienslocaux = {}   # dico (r1,r2) : "subnet ip"
 
 
     def __str__(self):
+        """
+        Fonction pour pouvoir obtenir les attributs d'un AS paramétré à partir d'un print
+        """
         return f"AS : {self.num}\nIGP : {self.igp}\nRouters : {self.routers}\nAS relationships : {self.rel}\nIP RANGE: {self.ip}\nLoopback IP range: {self.loopback}\n"
 
 class Router: 

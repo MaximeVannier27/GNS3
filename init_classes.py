@@ -10,9 +10,10 @@ def load_intent(intent):
 
 def init_as(dico_as):
     """
-    Cette fonction fait beaucoup de choses..euh trop de choses aha
-    elle prend toutes les informations du json déjà chargé au préalable (dico_as) pour
-    les stocker dans des objets de classe AS et Routeur
+    Cette fonction permet d'initialiser des objets de classes AS et Router du fichier classes.py à partir
+    des informations contenues dans l'intent file. Ces classes permettent par exemple de pouvoir facilement réaccéder 
+    aux caractéristiques et paramètres d'un router à partir de son numéro.
+    Elle retourne une liste d'objets de type AS correspondant aux AS du intent file.
     """
 
     liste_as = [] # liste qui va être retournée contenant les AS
@@ -33,20 +34,18 @@ def init_as(dico_as):
             Ri = f"R{router_n}" #nom de la variable de type router créée
             globals()[Ri] = Router(as_n)
             globals()[Ri].numero = router_n
-            # print(globals()[Ri])
             (globals()[num_as].routers).append(globals()[Ri])
-
-    #print(globals()[num_as])            
+          
             
     return liste_as
 
 
 def init_routeur_adresses(dico_as):
     """
-    cette fonction permet d'initialiser les adresses des interfaces de tout les routeurs
-    pour l'instant c'est du bullshit ça écrit juste un chiffre random incrémenté de 1 à chaque fois
-    mais ça sera suffisant pour faire des tests,
-    à la rentrée je pose des questions et je m'en occupe
+    Cette fonction permet d'attribuer un sous-réseau de sa plage IP à chaque lien interne à un AS,
+    et donc d'attribuer les adresses correspondantes à ses routeurs.
+    Elle s'occupe aussi de paramétrer le coût du lien s'il est en OSPF.
+    Pour les routeurs liens entre deux AS, elle prend en compte des adresses données dans le intent file.
     """
 
     for as_n,value in dico_as.items():
@@ -60,14 +59,17 @@ def init_routeur_adresses(dico_as):
             Ri = f"R{router_n}"
             routeur_courant = globals()[Ri]
             loopback_temp = loopback(ipaddress.IPv6Address(as_courant.loopback[0]),compteur_loopback)
+
             if loopback_temp > ipaddress.IPv6Address(as_courant.loopback[1]):
                 print("Erreur, plage d'adresses loopback débordée")
                 return -1
+            
             routeur_courant.loopback = loopback_temp
             compteur_loopback+=1
             
             if connexions["e_interfaces"] !=None:
                 routeur_courant.border = True
+
             for interface,valeur in connexions["e_interfaces"].items():
                 voisin=valeur[0]
                 ip=valeur[1]
@@ -81,15 +83,21 @@ def init_routeur_adresses(dico_as):
                     voisin = valeur         #si on est en rip valeur est un string
 
                 routeur_voisin = globals()[voisin]
+
+                #On commence par vérifier que le lien n'a pas déjà été configuré
                 if (routeur_voisin,routeur_courant) not in as_courant.lienslocaux.keys():
                     subnet = ipaddress.IPv6Address(as_courant.ip[0])
                     subnet+=compteur_ip*(2**64)
+
                     if subnet > ipaddress.IPv6Address(as_courant.ip[1]):
                         print("Erreur, plage d'adresses ip débordée")
                         return -1
+                    
                     as_courant.lienslocaux[(routeur_courant,routeur_voisin)] = subnet
                     ip_1= ip_def(subnet,1)
                     ip_2= ip_def(subnet,2)
+
+                    #On paramètre le coût OSPF si nécessaire
                     if as_courant.igp == "OSPF":
                         routeur_courant.interfaces[interface]=[ip_1,routeur_voisin,cost]
                         routeur_voisin.interfaces[interface]=[ip_2,routeur_courant,cost]

@@ -4,10 +4,16 @@ import os
 
 
 def initConfigList(routerName):
+    """
+    Permet d'ajouter les lignes standards de début du type de configuration que l'on va réaliser
+    """
     routerName.configList = ["!","","!",f"! Last configuration change at {datetime.now()}", "!", "version 15.2", "service timestamps debug datetime msec", "service timestamps log datetime msec", "!", f"hostname R{routerName.numero} ", "!", "boot-start-marker", "boot-end-marker", "!", "!", "!", "no aaa new-model", "no ip icmp rate-limit unreachable", "ip cef", "!", "!", "!", "!", "!", "!", "no ip domain lookup", "ipv6 unicast-routing", "ipv6 cef", "!", "!", "multilink bundle-name authenticated", "!", "!", "!", "!", "!", "!", "!", "!", "!", "ip tcp synwait-time 5", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!", "!"]
 
 
 def creationConfigFinal(routerName):
+    """
+    Permet d'écrire les lignes de configuration stockées dans un fichier config
+    """
     with open(f"i{routerName.numero}_startup-config.cfg","w") as fichier:
         for ligne in routerName.configList:
             fichier.write(ligne + '\n')
@@ -63,6 +69,10 @@ def initInterface(routeurName,asName):
 
 
 def initBGP(routeurName,asName):
+    """
+    Fonction qui permet d'ajouter à la configuration d'un routeur
+    la création des sessions iBGP ou eBGP avec ses voisins
+    """
 
     lignes_bgp = []
     lignes_bgp.append(f"router bgp {asName.num}")
@@ -95,6 +105,12 @@ def initBGP(routeurName,asName):
 
 
 def initAddressFamily(routerName,asName):
+    """
+    Fonction qui permet de définir les lignes de configuration concernant le partage et l'annonce de routes.
+    Tous les sous-réseaux (liens) de l'AS sont transmis.
+    Des règles route-map sont appliqués aux routes venant de voisins d'un AS différent (mettant en jeu les communities).
+    """
+
     lignes_addressfamily = []
     lignes_addressfamily.append(" address-family ipv4")
     lignes_addressfamily.append(" exit-address-family")
@@ -103,7 +119,7 @@ def initAddressFamily(routerName,asName):
     lignes_addressfamily.append(" address-family ipv6")
 
     if routerName.border:
-        for i in asName.lienslocaux.values(): #faut réussir à se balader parmis tous les liens de l'AS et on append le préfixe du sous-réseau
+        for i in asName.lienslocaux.values():
             lignes_addressfamily.append(f"  network {i}/64")
 
         for i,valeur in routerName.interfaces.items(): #récupérer toutes les interfaces des routeurs d'AS voisines, connectées a routeurName 
@@ -148,6 +164,10 @@ def initAddressFamily(routerName,asName):
 
 
 def initProtocole(routeurName,asName):
+    """
+    Cette fonction permet d'ajouter les lignes de configuration de l'IGP d'un AS, ici ospf ou rip.
+    """
+
     lignes_protocole = []
     lignes_protocole.append("ip forward-protocol nd")
     lignes_protocole.append("!")
@@ -170,7 +190,11 @@ def initProtocole(routeurName,asName):
     return lignes_protocole
 
 def route_map_rules(routeurName,AsName):
-
+    """
+    Cette fonction permet de définir et ajouter à la configuration les règles route-map
+    que l'on veut appliquer sur un voisin auquel on les a associé.
+    """
+    
     lignes_rules=[]
     connexions=[]     #type d'AS connecté sur ce routeur
 
