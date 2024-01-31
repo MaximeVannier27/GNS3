@@ -22,7 +22,7 @@ Les règles prédéfinies dans notre programme sont les suivantes :
 - frommypeer : tague la communauté peer et met la localpref à 120
 - frommyclient : tague la communauté client et met la localpref à 150
 
-- tomyprovider et tomyprovider : empêchent la transmission des routes taguées peer et provider (aux peers et aux providers). Ce sont deux règles distinctes pour permettre de leur ajouter des spécificités plus tard si nécessaire.
+- tomyprovider et tomypeer : empêchent la transmission des routes taguées peer et provider (aux peers et aux providers). Ce sont deux règles distinctes pour permettre de leur ajouter des spécificités plus tard si nécessaire.
 
 ## Utilisation du programme
 Pour pouvoir utiliser  notre programme, vous devez disposer d'un fichier json décrivant la configuration du réseau que vous voulez configurer et d'un projet GNS3 avec les routeurs et liens entre leurs interfaces correspondant. 
