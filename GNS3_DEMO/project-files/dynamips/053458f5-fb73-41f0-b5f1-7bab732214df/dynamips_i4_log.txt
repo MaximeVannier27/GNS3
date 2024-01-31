@@ -1,0 +1,51 @@
+Jan 31 11:54:02.213 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 31 11:54:02.214 HYPERVISOR: Started on IP = localhost, TCP port = 53673.
+Jan 31 11:54:02.727 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 31 11:54:02.727 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips 
+Jan 31 11:54:02.727 GENERAL: working_dir=C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips
+Jan 31 11:54:02.727 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips\10555df2-551c-4edb-a09b-ce07799d8b5a 
+Jan 31 11:54:02.728 GENERAL: working_dir=C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips\10555df2-551c-4edb-a09b-ce07799d8b5a
+Jan 31 11:54:02.728 HYPERVISOR: exec_cmd: vm create R5 5 c7200 
+Jan 31 11:54:02.729 VM: VM R5 created.
+Jan 31 11:54:02.729 HYPERVISOR: exec_cmd: vm set_con_tcp_port R5 5015 
+Jan 31 11:54:02.729 HYPERVISOR: exec_cmd: c7200 get_mac_addr R5 
+Jan 31 11:54:02.729 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:02.729 HYPERVISOR: exec_cmd: vm slot_add_binding R5 0 0 C7200-IO-FE 
+Jan 31 11:54:02.730 HYPERVISOR: exec_cmd: vm set_disk0 R5 0 
+Jan 31 11:54:02.730 HYPERVISOR: exec_cmd: vm set_exec_area R5 64 
+Jan 31 11:54:02.731 HYPERVISOR: exec_cmd: vm set_ios R5 C:/Users/maxou/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 31 11:54:02.731 HYPERVISOR: exec_cmd: c7200 set_mac_addr R5 ca05.4da4.0000 
+Jan 31 11:54:02.732 HYPERVISOR: exec_cmd: vm set_nvram R5 512 
+Jan 31 11:54:02.732 HYPERVISOR: exec_cmd: vm set_ram R5 512 
+Jan 31 11:54:02.732 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:02.732 HYPERVISOR: exec_cmd: vm slot_add_binding R5 1 0 PA-GE 
+Jan 31 11:54:02.733 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:02.733 HYPERVISOR: exec_cmd: vm slot_add_binding R5 2 0 PA-GE 
+Jan 31 11:54:07.494 HYPERVISOR: exec_cmd: nio create_udp udp-5951d42c-7d42-4a45-87a6-0f7b68e85bb5 10010 127.0.0.1 10011 
+Jan 31 11:54:07.736 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R5 0 0 udp-5951d42c-7d42-4a45-87a6-0f7b68e85bb5 
+Jan 31 11:54:07.736 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:07.783 HYPERVISOR: exec_cmd: nio create_udp udp-7da3ead8-1d46-4b27-87e7-ba0e02b48ffd 10016 127.0.0.1 10017 
+Jan 31 11:54:07.784 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R5 2 0 udp-7da3ead8-1d46-4b27-87e7-ba0e02b48ffd 
+Jan 31 11:54:07.786 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:08.090 HYPERVISOR: exec_cmd: nio create_udp udp-e209b8e5-1050-49cc-a9dc-150e666c1abb 10026 127.0.0.1 10027 
+Jan 31 11:54:08.092 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R5 1 0 udp-e209b8e5-1050-49cc-a9dc-150e666c1abb 
+Jan 31 11:54:08.092 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:59.253 HYPERVISOR: exec_cmd: vm set_ghost_status R5 2 
+Jan 31 11:54:59.255 HYPERVISOR: exec_cmd: vm set_ghost_file R5 C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Jan 31 11:54:59.255 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 11:54:59.271 HYPERVISOR: exec_cmd: vm set_config R5 configs\i5_startup-config.cfg 
+Jan 31 11:54:59.273 HYPERVISOR: exec_cmd: vm start R5 
+Jan 31 11:55:29.529 HYPERVISOR: exec_cmd: vm extract_config R5 
+Jan 31 12:18:12.189 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 12:18:12.189 HYPERVISOR: exec_cmd: vm stop R5 
+Jan 31 12:18:12.337 VM: VM R5 shutdown.
+Jan 31 12:18:12.337 HYPERVISOR: exec_cmd: vm extract_config R5 
+Jan 31 12:18:17.124 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 12:18:17.125 HYPERVISOR: exec_cmd: vm extract_config R5 
+Jan 31 12:18:17.428 HYPERVISOR: exec_cmd: vm get_status R5 
+Jan 31 12:18:17.429 HYPERVISOR: exec_cmd: vm extract_config R5 
+Jan 31 12:18:17.430 HYPERVISOR: exec_cmd: vm delete R5 
+Jan 31 12:18:17.430 VM: VM R5 destroyed.
+Jan 31 12:18:17.431 HYPERVISOR: exec_cmd: hypervisor stop 
+Jan 31 12:18:17.583 HYPERVISOR: Stopped.
+Jan 31 12:18:17.583 GENERAL: reset done.

@@ -1,0 +1,48 @@
+Jan 31 11:54:03.336 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 31 11:54:03.336 HYPERVISOR: Started on IP = localhost, TCP port = 53679.
+Jan 31 11:54:03.839 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 31 11:54:03.839 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips 
+Jan 31 11:54:03.839 GENERAL: working_dir=C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips
+Jan 31 11:54:03.839 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips\e83d4106-437c-40fa-b9ed-8a42f6b9e93f 
+Jan 31 11:54:03.840 GENERAL: working_dir=C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips\e83d4106-437c-40fa-b9ed-8a42f6b9e93f
+Jan 31 11:54:03.840 HYPERVISOR: exec_cmd: vm create R8 8 c7200 
+Jan 31 11:54:03.841 VM: VM R8 created.
+Jan 31 11:54:03.841 HYPERVISOR: exec_cmd: vm set_con_tcp_port R8 5017 
+Jan 31 11:54:03.842 HYPERVISOR: exec_cmd: c7200 get_mac_addr R8 
+Jan 31 11:54:03.842 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 11:54:03.842 HYPERVISOR: exec_cmd: vm slot_add_binding R8 0 0 C7200-IO-FE 
+Jan 31 11:54:03.842 HYPERVISOR: exec_cmd: vm set_disk0 R8 0 
+Jan 31 11:54:03.843 HYPERVISOR: exec_cmd: vm set_exec_area R8 64 
+Jan 31 11:54:03.843 HYPERVISOR: exec_cmd: vm set_ios R8 C:/Users/maxou/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 31 11:54:03.843 HYPERVISOR: exec_cmd: c7200 set_mac_addr R8 ca08.102c.0000 
+Jan 31 11:54:03.844 HYPERVISOR: exec_cmd: vm set_nvram R8 512 
+Jan 31 11:54:03.844 HYPERVISOR: exec_cmd: vm set_ram R8 512 
+Jan 31 11:54:03.845 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 11:54:03.845 HYPERVISOR: exec_cmd: vm slot_add_binding R8 1 0 PA-GE 
+Jan 31 11:54:03.845 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 11:54:03.845 HYPERVISOR: exec_cmd: vm slot_add_binding R8 2 0 PA-GE 
+Jan 31 11:54:08.388 HYPERVISOR: exec_cmd: nio create_udp udp-fd877e4a-6a8a-4b3e-bd36-f82fb3ed764b 10034 127.0.0.1 10035 
+Jan 31 11:54:08.637 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R8 0 0 udp-fd877e4a-6a8a-4b3e-bd36-f82fb3ed764b 
+Jan 31 11:54:08.637 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 11:54:09.839 HYPERVISOR: exec_cmd: nio create_udp udp-d005c439-c2b0-40af-8edb-c0af3f2e1412 10062 127.0.0.1 10063 
+Jan 31 11:54:09.841 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R8 1 0 udp-d005c439-c2b0-40af-8edb-c0af3f2e1412 
+Jan 31 11:54:09.841 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 11:54:59.289 HYPERVISOR: exec_cmd: vm set_ghost_status R8 2 
+Jan 31 11:54:59.289 HYPERVISOR: exec_cmd: vm set_ghost_file R8 C:\Users\maxou\Documents\projet_GNS3\GNS3\GNS3_DEMO\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Jan 31 11:54:59.290 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 11:54:59.296 HYPERVISOR: exec_cmd: vm set_config R8 configs\i8_startup-config.cfg 
+Jan 31 11:54:59.296 HYPERVISOR: exec_cmd: vm start R8 
+Jan 31 11:55:29.582 HYPERVISOR: exec_cmd: vm extract_config R8 
+Jan 31 12:18:12.199 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 12:18:12.203 HYPERVISOR: exec_cmd: vm stop R8 
+Jan 31 12:18:12.369 VM: VM R8 shutdown.
+Jan 31 12:18:12.369 HYPERVISOR: exec_cmd: vm extract_config R8 
+Jan 31 12:18:17.125 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 12:18:17.125 HYPERVISOR: exec_cmd: vm extract_config R8 
+Jan 31 12:18:17.292 HYPERVISOR: exec_cmd: vm get_status R8 
+Jan 31 12:18:17.292 HYPERVISOR: exec_cmd: vm extract_config R8 
+Jan 31 12:18:17.294 HYPERVISOR: exec_cmd: vm delete R8 
+Jan 31 12:18:17.294 VM: VM R8 destroyed.
+Jan 31 12:18:17.295 HYPERVISOR: exec_cmd: hypervisor stop 
+Jan 31 12:18:17.583 HYPERVISOR: Stopped.
+Jan 31 12:18:17.583 GENERAL: reset done.
