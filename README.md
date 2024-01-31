@@ -7,6 +7,7 @@ Le programme permet de créer des fichiers de configuration pour tous les routeu
 - Tagging de communautés BGP et mise en place de route-map correspondants 
 - Drag-and-Drop bot
 
+
 ## Détail sur les politiques BGP et les communautés
 Les routes reçues d'un AS différent sont taguées par le routeur de bordure qui les reçoit selon le format standard suivant, numéro d'AS qui tague la communauté : numéro de communauté.
 Les numéros de communautés ont pour tous les AS les correponsdances suivantes :
@@ -17,12 +18,22 @@ Les numéros de communautés ont pour tous les AS les correponsdances suivantes 
 Les routeurs de bordure appliquent à ces routes des règles afin de les retransmettre ou pas aux autres AS.
 Les règles prédéfinies dans notre programme sont les suivantes : 
 
-- frommyprovider : tague la communauté provider à la route entrante et met la localpref à 
-- frommypeer : tague la communauté peer et met la localpref à
-- frommyclient : tague la communauté client et met la localpref à 
+- frommyprovider : tague la communauté provider à la route entrante et met la localpref à 50
+- frommypeer : tague la communauté peer et met la localpref à 120
+- frommyclient : tague la communauté client et met la localpref à 150
 
 - tomyprovider et tomyprovider : empêchent la transmission des routes taguées peer et provider (aux peers et aux providers). Ce sont deux règles distinctes pour permettre de leur ajouter des spécificités plus tard si nécessaire.
 
+## Utilisation du programme
+Pour pouvoir utiliser  notre programme, vous devez disposer d'un fichier json décrivant la configuration du réseau que vous voulez configurer et d'un projet GNS3 avec les routeurs et liens entre leurs interfaces correspondant. 
+
+Pour lancer le programme, lancer le fichier main.py (commande python3 main.py) puis entrez le chemin de l'intent file que vous voulez utiliser. Une fois les fichiers de configurations générés, entrez le chemin du répertoire projet GNS3 où ils doivent être déplacés. Vous pouvez maintenant lancez le projet GNS3 et tout devrait être configuré selon l'intent file!
+
+### Proposition de tests
+Nous vous proposons de tester le programme avec le projet fourni dans le dossier GNS3_demo et le fichier intent_demo.json. Il est constitué d'un AS central (AS5) connecté à un provider (AS2), un peer (AS1) et deux clients (AS3 et AS4). 
+
+Afin de voir l'effet des politiques BGP, vous pouvez tenter des pings entre le peer et le provider, ceux-ci ne devraient pas aboutir, alors que les pings vers les clients ou venant des clients atteignent tout le réseau.
+Tous les AS sont configurés en RIP sauf l'AS central qui est en OSPF. Nous avons changé le coût OSPF du lien entre R3 et R6, celui-ci est à 20 (à la place de 1 par défaut) et vous devriez pouvoir voir comment ce lien n'est alors pas emprunté par exemple quand R6 veut joindre l'AS 1 ou R3 l'AS 2.
 
 
 ## Structure du JSON
