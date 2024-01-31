@@ -5,7 +5,7 @@ from init_classes import *
 fin_config = ["!", "!", "!", "control-plane", "!", "!", "line con 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line aux 0", " exec-timeout 0 0", " privilege level 15", " logging synchronous", " stopbits 1", "line vty 0 4", " login", "!", "!", "end"]
 
 
-jason = str(input("Quel fichier intent (.json) utilisé: "))
+jason = str(input("Quel fichier intent (.json) souhaitez-vous utiliser? : "))
 dico_json = load_intent(jason)
 liste_AS = init_as(dico_json)
 init_routeur_adresses(dico_json)

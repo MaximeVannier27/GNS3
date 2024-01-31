@@ -97,7 +97,6 @@ def initBGP(routeurName,asName):
                     temp = c[0]
                     break
             lignes_bgp.append(f" neighbor {temp} remote-as {routeur_voisin.AS_n}")
-            lignes_bgp.append(f" neighbor {temp} send-community")
 
     return lignes_bgp
 
@@ -132,6 +131,8 @@ def initAddressFamily(routerName,asName):
                         tmp = j[0]
                         break
                 lignes_addressfamily.append(f"  neighbor {tmp} activate") #@ip de l'interface du routeur de l'AS voisine
+                lignes_addressfamily.append(f"  neighbor {tmp} send-community")
+                
                 if asName.rel[voisin.AS_n]=="client":
                     lignes_addressfamily.append(f"  neighbor {tmp} route-map frommyclient in")
 
