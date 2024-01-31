@@ -108,7 +108,7 @@
         }
     },
     "5": {
-        "IGP": "RIP",
+        "IGP": "OSPF",
         "relationships": {
             "1": "peer",
             "2": "provider",
@@ -120,7 +120,8 @@
         "routers": {
             "3": {
                 "i_interfaces": {
-                    "GigabitEthernet2/0": "R5"
+                    "GigabitEthernet2/0": ["R5",0],
+                    "GigabitEthernet3/0": ["R6",20]
                 },
                 "e_interfaces": {
                     "FastEthernet0/0": [
@@ -135,8 +136,8 @@
             },
             "5": {
                 "i_interfaces": {
-                    "GigabitEthernet2/0": "R3",
-                    "GigabitEthernet1/0": "R4"
+                    "GigabitEthernet2/0": ["R3",0],
+                    "GigabitEthernet1/0": ["R4",0]
                 },
                 "e_interfaces": {
                     "FastEthernet0/0": [
@@ -147,8 +148,8 @@
             },
             "4": {
                 "i_interfaces": {
-                    "GigabitEthernet2/0": "R6",
-                    "GigabitEthernet1/0": "R5"
+                    "GigabitEthernet2/0": ["R6",0],
+                    "GigabitEthernet1/0": ["R5",0]
                 },
                 "e_interfaces": {
                     "FastEthernet0/0": [
@@ -159,7 +160,8 @@
             },
             "6": {
                 "i_interfaces": {
-                    "GigabitEthernet2/0": "R4"
+                    "GigabitEthernet2/0": ["R4",0],
+                    "GigabitEthernet1/0": ["R3",20]
                 },
                 "e_interfaces": {}
             }

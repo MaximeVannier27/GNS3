@@ -260,6 +260,7 @@ def drag_and_drop():
     repertoire_configs = os.listdir(os.path.join(os.getcwd(), projet, "project-files", "dynamips"))
 
     for dossier in repertoire_configs:
+        print("dossier:",dossier)
         nom_cfg = os.listdir(os.path.join(os.getcwd(), projet, "project-files", "dynamips",dossier,"configs"))
         num = nom_cfg[0][1:-19]
         nom = f"i{num}_startup-config.cfg"
