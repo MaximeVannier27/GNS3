@@ -21,8 +21,9 @@ Les règles prédéfinies dans notre programme sont les suivantes :
 - frommypeer : tague la communauté peer et met la localpref à
 - frommyclient : tague la communauté client et met la localpref à 
 
-- tomyprovider : empêche la transmission des routes taguées peer et provider
-- tomypeer : empêche la transmission des routes taguées peer et provider
+- tomyprovider et tomyprovider : empêchent la transmission des routes taguées peer et provider (aux peers et aux providers). Ce sont deux règles distinctes pour permettre de leur ajouter des spécificités plus tard si nécessaire.
+
+
 
 ## Structure du JSON
 Le premier niveau de clé du JSON correspond au numéro d'AS

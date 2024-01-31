@@ -211,11 +211,11 @@ def route_map_rules(routeurName,AsName):
         lignes_rules.append("!")
 
         lignes_rules.append("route-map tomyprovider deny 20")
-        lignes_rules.append(f" match community {routeurName.AS_n}:300")
+        lignes_rules.append(f" match community peer")
         lignes_rules.append("!")
 
         lignes_rules.append("route-map tomyprovider deny 21")
-        lignes_rules.append(f" match community {routeurName.AS_n}:100")
+        lignes_rules.append(f" match community provider")
         lignes_rules.append("!")
 
         lignes_rules.append("route-map tomyprovider permit 30")
@@ -234,11 +234,11 @@ def route_map_rules(routeurName,AsName):
         lignes_rules.append("!")
 
         lignes_rules.append("route-map tomypeer deny 20")
-        lignes_rules.append(f" match community {routeurName.AS_n}:100")
+        lignes_rules.append(f" match community provider")
         lignes_rules.append("!")
 
         lignes_rules.append("route-map tomypeer deny 21")
-        lignes_rules.append(f" match community {routeurName.AS_n}:300")
+        lignes_rules.append(f" match community peer")
         lignes_rules.append("!")
 
         lignes_rules.append("route-map tomypeer permit 30")
