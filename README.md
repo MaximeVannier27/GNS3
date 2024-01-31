@@ -35,6 +35,7 @@ Nous vous proposons de tester le programme avec le projet fourni dans le dossier
 Afin de voir l'effet des politiques BGP, vous pouvez tenter des pings entre le peer et le provider, ceux-ci ne devraient pas aboutir, alors que les pings vers les clients ou venant des clients atteignent tout le réseau.
 Tous les AS sont configurés en RIP sauf l'AS central qui est en OSPF. Nous avons changé le coût OSPF du lien entre R3 et R6, celui-ci est à 20 (à la place de 1 par défaut) et vous devriez pouvoir voir comment ce lien n'est alors pas emprunté par exemple quand R6 veut joindre l'AS 1 ou R3 l'AS 2.
 
+![Projet de Démo](image.png)
 
 ## Structure du JSON
 Le premier niveau de clé du JSON correspond au numéro d'AS
